@@ -110,7 +110,14 @@ def main():
             Light('192.168.178.32', 'D0:73:D5:2E:95:B1'),
             # Light('192.168.178.30', 'D0:73:D5:2E:85:58'),
             # Light('192.168.178.33', 'D0:73:D5:2E:12:B7'),
-          ]
+          ],
+          mask=None,
+          saturation_exp=1,
+          saturation_factor=1,
+          saturation_range=(0, 1),
+          value_exp=1,
+          value_factor=1,
+          value_range=(0, 1),
         ),
         FrameProcessor(
           lights=[
@@ -118,7 +125,13 @@ def main():
             # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 0, 1),
             # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 0, 1),
           ],
-          mask=np.array([ [ 1, 0, 0, 0, 0, 0, 0 ] ])
+          mask=np.array([ [ 1, 0, 0, 0, 0, 0, 0 ] ]),
+          saturation_exp=1,
+          saturation_factor=1,
+          saturation_range=(0, 1),
+          value_exp=1,
+          value_factor=1,
+          value_range=(0, 1),
         ),
         FrameProcessor(
           lights=[
@@ -126,7 +139,13 @@ def main():
             # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 2, 3),
             # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 2, 3),
           ],
-          mask=np.array([ [ 0, 1, 0, 0, 0, 0, 0 ] ])
+          mask=np.array([ [ 0, 1, 0, 0, 0, 0, 0 ] ]),
+          saturation_exp=1,
+          saturation_factor=1,
+          saturation_range=(0, 1),
+          value_exp=1,
+          value_factor=1,
+          value_range=(0, 1),
         ),
         FrameProcessor(
           lights=[
@@ -134,7 +153,13 @@ def main():
             # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 4, 5),
             # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 4, 5),
           ],
-          mask=np.array([ [ 0, 0, 1, 0, 0, 0, 0 ] ])
+          mask=np.array([ [ 0, 0, 1, 0, 0, 0, 0 ] ]),
+          saturation_exp=1,
+          saturation_factor=1,
+          saturation_range=(0, 1),
+          value_exp=1,
+          value_factor=1,
+          value_range=(0, 1),
         ),
         FrameProcessor(
           lights=[
@@ -142,7 +167,13 @@ def main():
             # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 6, 9),
             # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 6, 9),
           ],
-          mask=np.array([ [ 0, 0, 0, 1, 0, 0, 0 ] ])
+          mask=np.array([ [ 0, 0, 0, 1, 0, 0, 0 ] ]),
+          saturation_exp=1,
+          saturation_factor=1,
+          saturation_range=(0, 1),
+          value_exp=1,
+          value_factor=1,
+          value_range=(0, 1),
         ),
         FrameProcessor(
           lights=[
@@ -150,7 +181,13 @@ def main():
             # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 10, 11),
             # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 10, 11),
           ],
-          mask=np.array([ [ 0, 0, 0, 0, 1, 0, 0 ] ])
+          mask=np.array([ [ 0, 0, 0, 0, 1, 0, 0 ] ]),
+          saturation_exp=1,
+          saturation_factor=1,
+          saturation_range=(0, 1),
+          value_exp=1,
+          value_factor=1,
+          value_range=(0, 1),
         ),
         FrameProcessor(
           lights=[
@@ -158,7 +195,13 @@ def main():
             # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 12, 13),
             # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 12, 13),
           ],
-          mask=np.array([ [ 0, 0, 0, 0, 0, 1, 0 ] ])
+          mask=np.array([ [ 0, 0, 0, 0, 0, 1, 0 ] ]),
+          saturation_exp=1,
+          saturation_factor=1,
+          saturation_range=(0, 1),
+          value_exp=1,
+          value_factor=1,
+          value_range=(0, 1),
         ),
         FrameProcessor(
           lights=[
@@ -166,7 +209,13 @@ def main():
             # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 14, 15),
             # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 14, 15),
           ],
-          mask=np.array([ [ 0, 0, 0, 0, 0, 0, 1 ] ])
+          mask=np.array([ [ 0, 0, 0, 0, 0, 0, 1 ] ]),
+          saturation_exp=1,
+          saturation_factor=1,
+          saturation_range=(0, 1),
+          value_exp=1,
+          value_factor=1,
+          value_range=(0, 1),
         ),
       ]
     ) as ambilight,
