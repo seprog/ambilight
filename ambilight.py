@@ -26,23 +26,22 @@ class FrameProcessor:
     self,
     frame: np.ndarray[tuple[int, int, int]]
   ):
-    return np.median(
-      frame.reshape(-1,3)
-      if self.mask is None
-      else frame.reshape(-1, 3)[
-        np.array(
-          zoom(
-            self.mask,
-            (
-              frame.shape[0] / self.mask.shape[0],
-              frame.shape[1] / self.mask.shape[1]
-            )
-          ),
-          dtype=bool
-        ).flatten()
-      ],
-      axis=0
-    )
+    pixels = frame.reshape(-1,3)
+    masked = pixels if self.mask is None else pixels[
+      np.array(
+        zoom(
+          self.mask,
+          (
+            frame.shape[0] / self.mask.shape[0],
+            frame.shape[1] / self.mask.shape[1]
+          )
+        ),
+        dtype=bool
+      ).flatten()
+    ]
+    median = np.median(masked, axis=0)
+    
+    return median
 
 @dataclass
 class Ambilight:
@@ -92,6 +91,7 @@ class Ambilight:
         light.set_color((hue,1,1))
         sleep(delay)
         light.set_color((hue,1,.1))
+      print()
       sleep(delay)
 
     for light in self.lights:
