@@ -13,7 +13,7 @@ from threading import Thread
 import numpy as np
 from scipy.ndimage import zoom
 
-from lifx_devices import Light, Device
+from lifx_devices import Light, Device, LIFX_PORT
 from lifx_payloads import add_header
 
 
@@ -69,7 +69,7 @@ class Ambilight:
         sequence=self.lifx_sequence,
         source=self.lifx_source
       ),
-      (light.ip, light.port)
+      (light.ip, LIFX_PORT)
     )
     self.lifx_sequence += 1
 
