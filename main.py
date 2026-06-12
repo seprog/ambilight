@@ -5,7 +5,7 @@ import ffmpeg
 
 from capture import Capture
 from ambilight import Ambilight, FrameProcessor
-from lifx_devices import Light
+from lifx_devices import Light, Zone
 
 
 def main():
@@ -105,18 +105,68 @@ def main():
     Ambilight(
       frame_processors=[
         FrameProcessor(
-          lights=[ Light('192.168.178.31', 'D0:73:D5:2E:14:A7') ],
-          mask=np.array([
-            [1, 0],
-            [1, 0]
-          ])
+          lights=[
+            Light('192.168.178.31', 'D0:73:D5:2E:14:A7'),
+            Light('192.168.178.32', 'D0:73:D5:2E:95:B1'),
+            # Light('192.168.178.30', 'D0:73:D5:2E:85:58'),
+            # Light('192.168.178.33', 'D0:73:D5:2E:12:B7'),
+          ]
         ),
         FrameProcessor(
-          lights=[ Light('192.168.178.32', 'D0:73:D5:2E:95:B1') ],
-          mask=np.array([
-            [0, 1],
-            [0, 1]
-          ])
+          lights=[
+            Zone('192.168.178.29', 'D0:73:D5:43:96:16', 0),
+            # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 0, 1),
+            # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 0, 1),
+          ],
+          mask=np.array([ [ 1, 0, 0, 0, 0, 0, 0 ] ])
+        ),
+        FrameProcessor(
+          lights=[
+            Zone('192.168.178.29', 'D0:73:D5:43:96:16', 1),
+            # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 2, 3),
+            # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 2, 3),
+          ],
+          mask=np.array([ [ 0, 1, 0, 0, 0, 0, 0 ] ])
+        ),
+        FrameProcessor(
+          lights=[
+            Zone('192.168.178.29', 'D0:73:D5:43:96:16', 2),
+            # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 4, 5),
+            # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 4, 5),
+          ],
+          mask=np.array([ [ 0, 0, 1, 0, 0, 0, 0 ] ])
+        ),
+        FrameProcessor(
+          lights=[
+            Zone('192.168.178.29', 'D0:73:D5:43:96:16', 3),
+            # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 6, 9),
+            # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 6, 9),
+          ],
+          mask=np.array([ [ 0, 0, 0, 1, 0, 0, 0 ] ])
+        ),
+        FrameProcessor(
+          lights=[
+            Zone('192.168.178.29', 'D0:73:D5:43:96:16', 4),
+            # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 10, 11),
+            # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 10, 11),
+          ],
+          mask=np.array([ [ 0, 0, 0, 0, 1, 0, 0 ] ])
+        ),
+        FrameProcessor(
+          lights=[
+            Zone('192.168.178.29', 'D0:73:D5:43:96:16', 5),
+            # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 12, 13),
+            # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 12, 13),
+          ],
+          mask=np.array([ [ 0, 0, 0, 0, 0, 1, 0 ] ])
+        ),
+        FrameProcessor(
+          lights=[
+            Zone('192.168.178.29', 'D0:73:D5:43:96:16', 6),
+            # Zone('192.168.178.39', 'D0:73:D5:43:84:82', 14, 15),
+            # Zone('192.168.178.38', 'D0:73:D5:43:E0:90', 14, 15),
+          ],
+          mask=np.array([ [ 0, 0, 0, 0, 0, 0, 1 ] ])
         ),
       ]
     ) as ambilight,
