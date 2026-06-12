@@ -152,7 +152,7 @@ class Ambilight:
         ):
           for light in lights:
             light.set_color(
-              hsv_color=(hsv_color[0], hsv_color[1], max(hsv_color[2], .02)),
+              hsv_color=hsv_color,
               transition_duration=fps ** -1 if fps else elapsed
             )
 
