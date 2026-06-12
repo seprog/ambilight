@@ -159,7 +159,7 @@ class Ambilight:
   def __enter__(self):
     self.sock = socket(AF_INET, SOCK_DGRAM)
     for light in self.lights:
-      light.ambilight = self
+      light._ambilight = self
       light.set_power()
     return self
 
@@ -169,5 +169,5 @@ class Ambilight:
     traceback
   ):
     for light in self.lights:
-      light.ambilight = None
+      light._ambilight = None
     self.sock.close()
