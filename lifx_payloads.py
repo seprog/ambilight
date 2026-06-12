@@ -93,8 +93,8 @@ def payload_501(
   apply: int = 1
 ):
   return b''.join((
-    (102).to_bytes(2, byteorder='little'),
-    b'\x00' * 3,
+    (501).to_bytes(2, byteorder='little'),
+    b'\x00' * 2,
     start_index.to_bytes(2, byteorder='little'),
     end_index.to_bytes(2, byteorder='little'),
     _hsbk_struct(*hsv_color, kelvin),
@@ -110,8 +110,8 @@ def payload_510(
   apply: int = 1,
 ):
   return b''.join((
-    (102).to_bytes(2, byteorder='little'),
-    b'\x00' * 3,
+    (510).to_bytes(2, byteorder='little'),
+    b'\x00' * 2,
     round(duration * 1_000).to_bytes(4, byteorder='little'),
     apply.to_bytes(1, byteorder='little'),
     start_index.to_bytes(2, byteorder='little'),
