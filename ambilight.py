@@ -4,7 +4,7 @@ from random import randint
 from socket import socket, AF_INET, SOCK_DGRAM
 from colorsys import rgb_to_hsv
 from itertools import count, chain
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from collections.abc import Generator
 from concurrent.futures import ThreadPoolExecutor
 from queue import Queue, Empty
@@ -20,8 +20,8 @@ from lifx_payloads import add_header
 @dataclass
 class Ambilight:
   frame_processors: list[FrameProcessor]
-  lifx_sequence: int = 0
-  lifx_source: int = randint(2, 2**32-1)
+  _lifx_sequence: int = field(default=0, init=False)
+  _lifx_source: int = field(default=randint(2, 2**32-1), init=False)
 
   @property
   def lights(self):
@@ -39,12 +39,12 @@ class Ambilight:
       add_header(
         payload=payload,
         mac=light.mac,
-        sequence=self.lifx_sequence,
-        source=self.lifx_source
+        sequence=self._lifx_sequence,
+        source=self._lifx_source
       ),
       (light.ip, LIFX_PORT)
     )
-    self.lifx_sequence += 1
+    self._lifx_sequence += 1
 
   def identify_lights(self,
     delay: float = 2
