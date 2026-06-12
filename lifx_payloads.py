@@ -27,6 +27,7 @@ def add_header(
     payload
   ))
 
+# https://lan.developer.lifx.com/docs/changing-a-device#setpower---packet-21
 def payload_21(
   level: bool
 ):
@@ -36,12 +37,14 @@ def payload_21(
     b'\xFF\xFF' if level else b'\x00\x00'
   ))
 
+# https://lan.developer.lifx.com/docs/changing-a-device#setreboot---packet-38
 def payload_38():
   return b''.join((
     (38).to_bytes(2, byteorder='little'),
     b'\x00' * 2
   ))
 
+# https://lan.developer.lifx.com/docs/changing-a-device#setcolor---packet-102
 def payload_102(
   hsv_color: tuple[float, float, float],
   kelvin: int,
@@ -57,6 +60,7 @@ def payload_102(
     round(duration * 1_000).to_bytes(4, byteorder='little')
   ))
 
+# https://lan.developer.lifx.com/docs/changing-a-device#setlightpower---packet-117
 def payload_117(
   level: bool,
   duration: float
