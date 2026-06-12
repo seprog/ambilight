@@ -1,7 +1,7 @@
 from socket import socket, AF_INET, SOCK_DGRAM
 from dataclasses import dataclass
 
-from lifx_payloads import add_header, payload_21, payload_38, payload_102, payload_117, payload_501
+from lifx_payloads import add_header, payload_21, payload_38, payload_102, payload_117, payload_510
 
 
 LIFX_PORT = 56700
@@ -76,11 +76,9 @@ class Zone(Light):
     transition_duration: float = 0
   ):
     self._send_payload(
-      payload=payload_501(
+      payload=payload_510(
         start_index=self.start_index,
-        end_index=self.end_index if self.end_index else self.start_index,
-        hsv_color=hsv_color,
-        kelvin=kelvin,
+        hsvk_colors=[(*hsv_color, kelvin) for _ in range(self.start_index, (self.end_index if self.end_index else self.start_index) + 1)],
         duration=transition_duration
       )
     )

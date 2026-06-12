@@ -84,23 +84,24 @@ def payload_117(
   ))
 
 # https://lan.developer.lifx.com/docs/changing-a-device#setcolorzones---packet-501
-def payload_501(
-  hsv_color: tuple[float, float, float],
-  kelvin: int,
-  duration: float,
-  start_index: int,
-  end_index: int,
-  apply: int = 1
-):
-  return b''.join((
-    (501).to_bytes(2, byteorder='little'),
-    b'\x00' * 2,
-    start_index.to_bytes(2, byteorder='little'),
-    end_index.to_bytes(2, byteorder='little'),
-    _hsbk_struct(*hsv_color, kelvin),
-    round(duration * 1_000).to_bytes(4, byteorder='little'),
-    apply.to_bytes(1, byteorder='little')
-  ))
+# TODO: NOT WORKING
+# def payload_501(
+#   hsv_color: tuple[float, float, float],
+#   kelvin: int,
+#   duration: float,
+#   start_index: int,
+#   end_index: int,
+#   apply: int = 1
+# ):
+#   return b''.join((
+#     (501).to_bytes(2, byteorder='little'),
+#     b'\x00' * 2,
+#     start_index.to_bytes(2, byteorder='little'),
+#     end_index.to_bytes(2, byteorder='little'),
+#     _hsbk_struct(*hsv_color, kelvin),
+#     round(duration * 1_000).to_bytes(4, byteorder='little'),
+#     apply.to_bytes(1, byteorder='little')
+#   ))
 
 # https://lan.developer.lifx.com/docs/changing-a-device#setextendedcolorzones---packet-510
 def payload_510(
