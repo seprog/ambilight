@@ -1,3 +1,4 @@
+from colorsys import rgb_to_hsv
 from dataclasses import dataclass
 
 import numpy as np
@@ -28,6 +29,7 @@ class FrameProcessor:
         dtype=bool
       ).flatten()
     ]
-    median = np.median(masked, axis=0)
+    median_rgb = np.median(masked, axis=0)
+    median_hsv = rgb_to_hsv(*median_rgb / 255)
     
-    return median
+    return median_hsv

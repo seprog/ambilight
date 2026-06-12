@@ -2,7 +2,6 @@ import math
 from time import time, sleep
 from random import randint
 from socket import socket, AF_INET, SOCK_DGRAM
-from colorsys import rgb_to_hsv
 from itertools import count, chain
 from dataclasses import dataclass, field
 from collections.abc import Generator
@@ -121,7 +120,7 @@ class Ambilight:
         )
 
         for lights, hsv_color in executor.map(
-          lambda fp: (fp.lights, rgb_to_hsv(*fp.ambilight_color(frame) / 255)),
+          lambda fp: (fp.lights, fp.ambilight_color(frame)),
           self.frame_processors
         ):
           for light in lights:
