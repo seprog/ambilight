@@ -32,19 +32,19 @@ def main():
   # Specific Input Arguments (depending on mode)
   parser.add_argument(
     '--input-width', type=int,
-    help='Input resolution (width) for screen grabs (e.g., for 1920x1080 use 1920). Required for --windows-screen, --linux-x11 if not capturing full screen.'
+    help='Input resolution (width) for screen grabs (e.g., for 1920x1080 use 1920) (required for Windows/X11).'
   )
   parser.add_argument(
     '--input-height', type=int,
-    help='Input resolution (height) for screen grabs (e.g., for 1920x1080 use 1080). Required for --windows-screen, --linux-x11 if not capturing full screen.'
+    help='Input resolution (height) for screen grabs (e.g., for 1920x1080 use 1080) (required for Windows/X11).'
   )
   parser.add_argument(
     '--input-offset-x', type=int, default=0,
-    help='X-offset for screen capture regions (Windows/X11).'
+    help='X-offset for screen capture regions (only supported for Windows/X11).'
   )
   parser.add_argument(
     '--input-offset-y', type=int, default=0,
-    help='Y-offset for screen capture regions (Windows/X11).'
+    help='Y-offset for screen capture regions (only supported for Windows/X11).'
   )
 
   # General Output Arguments
@@ -77,12 +77,12 @@ def main():
   stream: ffmpeg.nodes.FilterableStream
   if args.stream:
     stream = ffmpeg.input(
-      args.stream
+      args.stream,
     )
   elif args.linux_wayland:
     stream = ffmpeg.input(
       '0',
-      f='pipewire'
+      f='pipewire',
     )
   elif args.linux_x11:
     if not args.input_width or not args.input_height:
@@ -90,7 +90,7 @@ def main():
     stream = ffmpeg.input(
       f'{args.linux_x11}+{args.input_offset_x},{args.input_offset_y}',
       f='x11grab',
-      video_size=(args.input_width, args.input_height)
+      video_size=(args.input_width, args.input_height),
     )
   elif args.windows_screen:
     if not args.input_width or not args.input_height:
@@ -100,26 +100,26 @@ def main():
       f='gdigrab',
       video_size=(args.input_width, args.input_height),
       offset_x=args.input_offset_x,
-      offset_y=args.input_offset_y
+      offset_y=args.input_offset_y,
     )
   else:
     raise ValueError('No source was selected.')
 
   with (
     Ambilight(
-      **load_ambilight_config(args.config)
+      **load_ambilight_config(args.config),
     ) as ambilight,
     Capture(
       stream=stream,
       resolution=(args.output_width, args.output_height),
-      fps=args.output_fps
-    ) as frame_generator
+      fps=args.output_fps,
+    ) as frame_generator,
   ):
     if args.identify_lights:
       ambilight.identify_lights(args.identify_lights)
     ambilight.sync_lights(
       frame_generator=frame_generator,
-      fps=args.output_fps
+      fps=args.output_fps,
     )
 
 if __name__ == '__main__':
