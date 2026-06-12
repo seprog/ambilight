@@ -27,6 +27,20 @@ def add_header(
     payload
   ))
 
+def _hsbk_struct(
+  hue: float,
+  saturation: float,
+  value: float,
+  kelvin: int,
+): 
+  return b''.join((
+    (round(0x10000 * hue) % 0x10000).to_bytes(2, byteorder='little'),
+    round(0xFFFF * saturation).to_bytes(2, byteorder='little'),
+    round(0xFFFF * value).to_bytes(2, byteorder='little'),
+    kelvin.to_bytes(2, byteorder='little')
+  ))
+
+
 # https://lan.developer.lifx.com/docs/changing-a-device#setpower---packet-21
 def payload_21(
   level: bool
@@ -53,10 +67,7 @@ def payload_102(
   return b''.join((
     (102).to_bytes(2, byteorder='little'),
     b'\x00' * 3,
-    (round(0x10000 * hsv_color[0]) % 0x10000).to_bytes(2, byteorder='little'),
-    round(0xFFFF * hsv_color[1]).to_bytes(2, byteorder='little'),
-    round(0xFFFF * hsv_color[2]).to_bytes(2, byteorder='little'),
-    kelvin.to_bytes(2, byteorder='little'),
+    _hsbk_struct(*hsv_color, kelvin),
     round(duration * 1_000).to_bytes(4, byteorder='little')
   ))
 
