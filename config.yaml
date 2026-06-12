@@ -1,0 +1,95 @@
+ambilight:
+  frame_processors:
+    # Minimal Light example
+    - lights:
+        - type: light
+          ip: 192.168.178.1
+          mac: D0:73:D5:00:00:01
+
+    # Complete Light example
+    - lights:
+        - type: light
+          ip: 192.168.178.2
+          mac: D0:73:D5:00:00:02
+      mask:
+        - [1, 1, 0]
+        - [1, 1, 0]
+        - [0, 0, 0]
+      saturation_exp: 1
+      saturation_factor: 1
+      saturation_range: [0, 1]
+      value_exp: 1
+      value_factor: 1
+      value_range: [0, 1]
+    - lights:
+        - type: light
+          ip: 192.168.178.3
+          mac: D0:73:D5:00:00:03
+      mask:
+        - [0, 1, 1]
+        - [0, 1, 1]
+        - [0, 0, 0]
+      saturation_exp: 1
+      saturation_factor: 1
+      saturation_range: [0, 1]
+      value_exp: 1
+      value_factor: 1
+      value_range: [0, 1]
+
+    # Minimal Zone example
+    # (for selecting all zones the device can also be used as type light)
+    - lights:
+        - type: zone
+          ip: 192.168.178.4
+          mac: D0:73:D5:00:00:04
+          start_index: 0
+
+    # Complete Zone example
+    - lights:
+        - type: zone
+          ip: 192.168.178.5
+          mac: D0:73:D5:00:00:05
+          start_index: 0
+          end_index: 1
+      mask:
+        - [0, 0, 0, 0]
+        - [0, 0, 0, 0]
+        - [1, 0, 0, 0]
+      saturation_exp: 1
+      saturation_factor: 1
+      saturation_range: [0, 1]
+      value_exp: 1
+      value_factor: 1
+      value_range: [0, 1]
+    - lights:
+        - type: zone
+          ip: 192.168.178.5
+          mac: D0:73:D5:00:00:05
+          start_index: 2
+          end_index: 5
+      mask:
+        - [0, 0, 0, 0]
+        - [0, 0, 0, 0]
+        - [0, 1, 1, 0]
+      saturation_exp: 1
+      saturation_factor: 1
+      saturation_range: [0, 1]
+      value_exp: 1
+      value_factor: 1
+      value_range: [0, 1]
+    - lights:
+        - type: zone
+          ip: 192.168.178.5
+          mac: D0:73:D5:00:00:05
+          start_index: 6
+          end_index: 7
+      mask:
+        - [0, 0, 0, 0]
+        - [0, 0, 0, 0]
+        - [0, 0, 0, 1]
+      saturation_exp: 1
+      saturation_factor: 1
+      saturation_range: [0, 1]
+      value_exp: 1
+      value_factor: 1
+      value_range: [0, 1]

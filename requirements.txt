@@ -1,3 +1,4 @@
+PyYAML
 ffmpeg-python
 numpy
 scipy
