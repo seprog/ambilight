@@ -1,7 +1,10 @@
 from socket import socket, AF_INET, SOCK_DGRAM
 from dataclasses import dataclass, field
+from typing import TYPE_CHECKING
 
-from ambilight import Ambilight
+if TYPE_CHECKING:
+  from ambilight import Ambilight
+
 from lifx_payloads import add_header, payload_21, payload_38, payload_102, payload_117, payload_510
 
 
@@ -11,7 +14,7 @@ LIFX_PORT = 56700
 class Device:
   ip: str
   mac: str
-  _ambilight: Ambilight | None = field(init=False, default=None)
+  _ambilight: 'Ambilight | None' = field(init=False, default=None, repr=False)
 
   def _send_payload(self,
     payload: bytes
