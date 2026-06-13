@@ -43,19 +43,13 @@ class FrameProcessor:
 
     clamped_scaled_median_hsv = (
       median_hsv[0],
-      max(
-        self.saturation_range[0],
-        min(
-          self.saturation_range[1],
-          median_hsv[1] ** self.saturation_exp * self.saturation_factor,
-        )
+      np.clip(
+        median_hsv[1] ** self.saturation_exp * self.saturation_factor,
+        *self.saturation_range
       ),
-      max(
-        self.value_range[0],
-        min(
-          self.value_range[1],
-          median_hsv[2] ** self.value_exp * self.value_factor,
-        )
+      np.clip(
+        median_hsv[2] ** self.value_exp * self.value_factor,
+        *self.value_range
       ),
     )
     
