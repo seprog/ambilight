@@ -1,3 +1,5 @@
+PyYAML
 ffmpeg-python
 numpy
 scipy
+opencv-python

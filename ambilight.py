@@ -2,53 +2,25 @@ import math
 from time import time, sleep
 from random import randint
 from socket import socket, AF_INET, SOCK_DGRAM
-from colorsys import rgb_to_hsv
 from itertools import count, chain
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from collections.abc import Generator
 from concurrent.futures import ThreadPoolExecutor
 from queue import Queue, Empty
 from threading import Thread
 
 import numpy as np
-from scipy.ndimage import zoom
 
-from lifx_devices import Light, Device, LIFX_PORT
+from frame_processor import FrameProcessor
+from lifx_devices import Device, LIFX_PORT
 from lifx_payloads import add_header
 
 
 @dataclass
-class FrameProcessor:
-  lights: list[Light]
-  mask: np.ndarray | None = None
-
-  def ambilight_color(
-    self,
-    frame: np.ndarray[tuple[int, int, int]]
-  ):
-    return np.median(
-      frame.reshape(-1,3)
-      if self.mask is None
-      else frame.reshape(-1, 3)[
-        np.array(
-          zoom(
-            self.mask,
-            (
-              frame.shape[0] / self.mask.shape[0],
-              frame.shape[1] / self.mask.shape[1]
-            )
-          ),
-          dtype=bool
-        ).flatten()
-      ],
-      axis=0
-    )
-
-@dataclass
 class Ambilight:
   frame_processors: list[FrameProcessor]
-  lifx_sequence: int = 0
-  lifx_source: int = randint(2, 2**32-1)
+  _lifx_sequence: int = field(default=0, init=False)
+  _lifx_source: int = field(default=randint(2, 2**32-1), init=False)
 
   @property
   def lights(self):
@@ -66,12 +38,12 @@ class Ambilight:
       add_header(
         payload=payload,
         mac=light.mac,
-        sequence=self.lifx_sequence,
-        source=self.lifx_source
+        sequence=self._lifx_sequence,
+        source=self._lifx_source
       ),
       (light.ip, LIFX_PORT)
     )
-    self.lifx_sequence += 1
+    self._lifx_sequence += 1
 
   def identify_lights(self,
     delay: float = 2
@@ -92,6 +64,7 @@ class Ambilight:
         light.set_color((hue,1,1))
         sleep(delay)
         light.set_color((hue,1,.1))
+      print()
       sleep(delay)
 
     for light in self.lights:
@@ -147,19 +120,19 @@ class Ambilight:
         )
 
         for lights, hsv_color in executor.map(
-          lambda fp: (fp.lights, rgb_to_hsv(*fp.ambilight_color(frame) / 255)),
+          lambda fp: (fp.lights, fp.ambilight_color(frame)),
           self.frame_processors
         ):
           for light in lights:
             light.set_color(
-              hsv_color=(hsv_color[0], hsv_color[1], max(hsv_color[2], .02)),
+              hsv_color=hsv_color,
               transition_duration=fps ** -1 if fps else elapsed
             )
 
   def __enter__(self):
     self.sock = socket(AF_INET, SOCK_DGRAM)
     for light in self.lights:
-      light.ambilight = self
+      light._ambilight = self
       light.set_power()
     return self
 
@@ -169,5 +142,5 @@ class Ambilight:
     traceback
   ):
     for light in self.lights:
-      light.ambilight = None
+      light._ambilight = None
     self.sock.close()
