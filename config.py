@@ -40,10 +40,12 @@ def load_ambilight_config(path: str):
         mask=None if frame_processor_config.get('mask') is None else np.array(frame_processor_config['mask']),
         saturation_exp=frame_processor_config.get('saturation_exp', 1),
         saturation_factor=frame_processor_config.get('saturation_factor', 1),
-        saturation_range=tuple(frame_processor_config.get('saturation_range', (0, 1))),
+        saturation_clip_range=tuple(frame_processor_config.get('saturation_clip_range', (0, 1))),
+        saturation_lerp_range=tuple(frame_processor_config.get('saturation_lerp_range', (0, 1))),
         value_exp=frame_processor_config.get('value_exp', 1),
         value_factor=frame_processor_config.get('value_factor', 1),
-        value_range=tuple(frame_processor_config.get('value_range', (0, 1))),
+        value_clip_range=tuple(frame_processor_config.get('value_clip_range', (0, 1))),
+        value_lerp_range=tuple(frame_processor_config.get('value_lerp_range', (0, 1))),
       )
     )
 
